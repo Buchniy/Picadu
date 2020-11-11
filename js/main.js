@@ -47,7 +47,7 @@ const setUsers = {
   },
   signUp(email, password, handler){ /*регистрация*/
     if(!this.getUser(email)){
-      const user = {email, password, displayName: email};
+      const user = {email, password, displayName: email.split('@', 1).join()};
       listUsers.push(user);
       this.authorizedUser(user);
       handler();
