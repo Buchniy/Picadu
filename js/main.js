@@ -24,6 +24,7 @@ const  userAvatarElem = document.querySelector('.user-avatar');
 
 const postWrapper = document.querySelector('.posts');
 
+
 const listUsers = [
   {
     email: 'buch@gmail.com',
