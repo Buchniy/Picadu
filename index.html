@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="css/normalize.css">
   <!-- Подключаем стили -->
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
 </head>
 <body>
   <!-- Создаем шапку сайта -->
@@ -48,34 +49,11 @@
       <section class="post">
         <div class="post-body">
           <h2 class="post-title">Заголовлок поста</h2>
-          <p class="post-text">Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты. Языком что рот
-            маленький реторический вершину текстов обеспечивает гор свой назад решила сбить маленькая дорогу жизни рукопись ему
-            букв деревни предложения, ручеек залетают продолжил парадигматическая? Но языком сих пустился, запятой своего его
-            снова решила меня вопроса моей своих пояс коварный, власти диких правилами напоивший они текстов ipsum первую
-            подпоясал? Лучше, щеке подпоясал приставка большого курсивных на берегу своего? Злых, составитель агентство что
-            вопроса ведущими о решила одна алфавит! </p>
-          <p class="post-text">Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты. Языком что рот
-            маленький реторический вершину текстов обеспечивает гор свой назад решила сбить маленькая дорогу жизни рукопись ему
-            букв деревни предложения, ручеек залетают продолжил парадигматическая? Но языком сих пустился, запятой своего его
-            снова решила меня вопроса моей своих пояс коварный, власти диких правилами напоивший они текстов ipsum первую
-            подпоясал? Лучше, щеке подпоясал приставка большого курсивных на берегу своего? Злых, составитель агентство что
-            вопроса ведущими о решила одна алфавит! </p>
-          <p class="post-text">Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты. Языком что рот
-            маленький реторический вершину текстов обеспечивает гор свой назад решила сбить маленькая дорогу жизни рукопись ему
-            букв деревни предложения, ручеек залетают продолжил парадигматическая? Но языком сих пустился, запятой своего его
-            снова решила меня вопроса моей своих пояс коварный, власти диких правилами напоивший они текстов ipsum первую
-            подпоясал? Лучше, щеке подпоясал приставка большого курсивных на берегу своего? Злых, составитель агентство что
-            вопроса ведущими о решила одна алфавит! </p>
+          <p class="post-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab amet blanditiis consequatur corporis cum deleniti dicta, dolore enim, esse eum exercitationem expedita fuga inventore itaque minus nostrum nulla odit perferendis, placeat praesentium quam repellendus reprehenderit veniam voluptatem voluptatibus. Beatae debitis deleniti eaque earum eos eum fuga nemo optio repellendus temporibus. Ab alias blanditiis deserunt ducimus ea fugit impedit laborum minima molestiae molestias necessitatibus nemo optio quia, quos recusandae rerum velit voluptatem. Alias autem blanditiis consectetur dolore doloremque doloribus eveniet exercitationem, nostrum officiis quam quis repudiandae suscipit velit. Asperiores earum iste, libero minus nam provident reprehenderit rerum sapiente sed similique voluptate!</p>
           <div class="tags">
             <a href="#" class="tag">#свежее</a>
-            <a href="#" class="tag">#новое</a>
-            <a href="#" class="tag">#горячее</a>
-            <a href="#" class="tag">#мое</a>
-            <a href="#" class="tag">#случайность</a>
           </div>
-          <!-- /.tags -->
         </div>
-        <!-- /.post-body -->
         <div class="post-footer">
           <div class="post-buttons">
             <button class="post-button likes">
@@ -215,16 +193,44 @@
 
 
       <div class="user">
-        <a href="#" class="user-info">
-          <img width="40" height="40" src="img/avatar.jpeg" alt="photo: user" class="user-avatar">
-          <span class="user-name">islamovartem</span>
-        </a>
-        <!-- /.user-info -->
-        <a href="#" class="exit">
-          <svg class="icon icon-exit">
-            <use xlink:href="img/icons.svg#exit"></use>
-          </svg>
-        </a>
+       <div class="user-container">
+         <a href="#" class="user-info">
+           <img width="40" height="40" src="img/avatar.jpeg" alt="photo: user" class="user-avatar">
+           <span class="user-name">islamovartem</span>
+         </a>
+         <!-- /.user-info -->
+         <a href="#" class="edit">
+           <img src="img/edit-button.svg" alt="редактировать" class="icon icon-edit">
+         </a>
+
+         <a href="#" class="exit">
+           <svg class="icon icon-exit">
+             <use xlink:href="img/icons.svg#exit"></use>
+           </svg>
+         </a>
+       </div>
+
+<!--     =======================-->
+        <form class="edit-container">
+          <h2 class="edit-title">редактировать</h2>
+
+          <label  class="edit-label">Ваш логин
+            <input type="text" class="edit-input edit-username"
+            name="username"
+            minlength="3"
+            placeholder="логин"
+            required>
+          </label>
+
+          <label  class="edit-label">Ваше фото
+            <input type="text" class="edit-input edit-photo"
+                   name="photo"
+                   placeholder="URL-photo">
+          </label>
+          <button class="edit-btn">Сохранить</button>
+
+        </form>
+        <!--     =======================-->
         <!-- /.exit -->
       </div>
       <!-- /.user -->
@@ -277,6 +283,6 @@
     <!-- /.sidebar -->
   </div>
   <!-- /.content -->
-  <script src="js/main.js"></script>
+
 </body>
 </html>
