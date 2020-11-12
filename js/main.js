@@ -69,7 +69,7 @@ const setUsers = {
       return;
     }
     if(!this.getUser(email)){
-      const user = {email, password, displayName: email.split('@', 1).join()};/*email.substring(0,email.indexOf('@"))*/
+      const user = {email, password, displayName: email.split('@', 1).join()};/*email.substring(0, email.indexOf('@'))*/
       listUsers.push(user);
       this.authorizedUser(user);
       handler();
