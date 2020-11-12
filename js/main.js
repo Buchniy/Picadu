@@ -104,8 +104,7 @@ const  setPosts = {
       author: 'buch@gmail.com',
       date: '11.11.2020, 20:54:00',
       like: 45,
-      comments: 20,
-
+      comments: 20
     },
     {
       title: 'Заголовлок поста 2',
@@ -118,12 +117,12 @@ const  setPosts = {
     },
     {
       title: 'Заголовлок поста 3',
-      text: 'Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты. Языком что рот маленький реторический вершину текстов обеспечивает гор свой назад решила сбить маленькая дорогу жизни рукопись ему букв деревни предложения, ручеек залетают продолжил парадигматическая? Но языком сих пустился, запятой своего его',
+      text: 'Далеко-далеко вершину  продолжил парадигматическая? Но языком сих пустился, запятой своего его',
       tags: ['свежее','новое','горячее','мое','случайность'],
-      author: 'foo@gmail.com',
+      author: 'booooo@gmail.com',
       date: '11.11.2020, 20:54:00',
-      like: 30,
-      comments: 12
+      like: 393,
+      comments: 5
     }
   ]
 };
@@ -147,7 +146,8 @@ const showAllPosts = () => {
 
   let postsHTML = '';
   setPosts.allPosts.forEach(({ title, text, date, author, tags }) => {
-const displayName = author.split('@', 1).join();
+
+    const displayName = author.split('@', 1).join();
 
     postsHTML += `
     <section class="post">
@@ -155,7 +155,7 @@ const displayName = author.split('@', 1).join();
            <h2 class="post-title">${title}</h2>
            <p class="post-text">${text}</p>
            <div class="tags">
-             <a href="#" class="tag">${tags.map()}#свежее</a>
+             <a href="#" class="tag">${tags}#свежее</a>
            </div>
          </div>
          <div class="post-footer">
@@ -201,7 +201,6 @@ const displayName = author.split('@', 1).join();
 };
 
 const init = () => {
-
   loginForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const emailValue = emailInput.value;
@@ -209,7 +208,6 @@ const init = () => {
     setUsers.logIn(emailValue, passwordValue, toggleAuthDom );
     loginForm.reset();
   });
-
 
   loginSignup.addEventListener('click', (event) => {
     event.preventDefault();
@@ -219,12 +217,10 @@ const init = () => {
     loginForm.reset();
   });
 
-
   exitElem.addEventListener('click', (event) => {
     event.preventDefault();
     setUsers.logOut(toggleAuthDom);
   });
-
 
   editElem.addEventListener('click', (event) => {
     event.preventDefault();
