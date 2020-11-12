@@ -104,10 +104,20 @@ const  setPosts = {
       author: 'buch@gmail.com',
       date: '11.11.2020, 20:54:00',
       like: 45,
-      comments: 20
+      comments: 20,
+
     },
     {
-      title: 'Заголовлок поста',
+      title: 'Заголовлок поста 2',
+      text: 'Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты. Языком что рот маленький реторический вершину текстов обеспечивает гор свой назад решила сбить маленькая дорогу жизни рукопись ему букв деревни предложения, ручеек залетают продолжил парадигматическая? Но языком сих пустился, запятой своего его',
+      tags: ['свежее','новое','горячее','мое','случайность'],
+      author: 'foo@gmail.com',
+      date: '11.11.2020, 20:54:00',
+      like: 30,
+      comments: 12
+    },
+    {
+      title: 'Заголовлок поста 3',
       text: 'Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты. Языком что рот маленький реторический вершину текстов обеспечивает гор свой назад решила сбить маленькая дорогу жизни рукопись ему букв деревни предложения, ручеек залетают продолжил парадигматическая? Но языком сих пустился, запятой своего его',
       tags: ['свежее','новое','горячее','мое','случайность'],
       author: 'foo@gmail.com',
@@ -136,14 +146,16 @@ const toggleAuthDom = () => {
 const showAllPosts = () => {
 
   let postsHTML = '';
-  setPosts.allPosts.forEach((post, i, arr) => {
+  setPosts.allPosts.forEach(({ title, text, date, author, tags }) => {
+const displayName = author.split('@', 1).join();
+
     postsHTML += `
     <section class="post">
          <div class="post-body">
-           <h2 class="post-title">Заголовлок поста</h2>
-           <p class="post-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab amet blanditiis consequatur corporis cum deleniti dicta, dolore enim, esse eum exercitationem expedita fuga inventore itaque minus nostrum nulla odit perferendis, placeat praesentium quam repellendus reprehenderit veniam voluptatem voluptatibus. Beatae debitis deleniti eaque earum eos eum fuga nemo optio repellendus temporibus. Ab alias blanditiis deserunt ducimus ea fugit impedit laborum minima molestiae molestias necessitatibus nemo optio quia, quos recusandae rerum velit voluptatem. Alias autem blanditiis consectetur dolore doloremque doloribus eveniet exercitationem, nostrum officiis quam quis repudiandae suscipit velit. Asperiores earum iste, libero minus nam provident reprehenderit rerum sapiente sed similique voluptate!</p>
+           <h2 class="post-title">${title}</h2>
+           <p class="post-text">${text}</p>
            <div class="tags">
-             <a href="#" class="tag">#свежее</a>
+             <a href="#" class="tag">${tags.map()}#свежее</a>
            </div>
          </div>
          <div class="post-footer">
@@ -174,8 +186,8 @@ const showAllPosts = () => {
            <!-- /.post-buttons -->
            <div class="post-author">
              <div class="author-about">
-               <a href="#" class="author-username">arteislamov</a>
-               <span class="post-time">5 минут назад</span>
+               <a href="#" class="author-username">${displayName}</a>
+               <span class="post-time">${date}</span>
              </div>
              <a href="#" class="author-link"><img src="img/avatar.jpeg" alt="avatar" class="author-avatar"></a>
            </div>
