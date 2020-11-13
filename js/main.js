@@ -1,3 +1,17 @@
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBdFEILU0k3Giz6Ealyjwxj1WZ8A6Kc_w8",
+  authDomain: "picadu-89b19.firebaseapp.com",
+  databaseURL: "https://picadu-89b19.firebaseio.com",
+  projectId: "picadu-89b19",
+  storageBucket: "picadu-89b19.appspot.com",
+  messagingSenderId: "485180545924",
+  appId: "1:485180545924:web:80182910e660ba49e7dbd1"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+console.log(firebase, 'firebase');
+
 // Создаем переменную, в которую положим кнопку меню
 let menuToggle = document.querySelector('#menu-toggle');
 // Создаем переменную, в которую положим меню
