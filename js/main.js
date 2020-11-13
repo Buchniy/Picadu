@@ -57,24 +57,53 @@ const listUsers = [
 
 const setUsers = {
   user: null,
+  initUser(handler){
+    firebase.auth().onAuthStateChanged(user => {
+      if(user){
+        this.user = user;
+      }else {
+        this.user = null;
+      }
+      if(handler) handler();
+
+    })
+  },
   logIn(email, password, handler){ /*вход*/
     if(!regExpValidEmail.test(email)){
       alert('email не валиден');
       return
     }
-    const user = this.getUser(email);
 
-    if(user && user.password === password){
-      this.authorizedUser(user);
-      handler();
-    }else{
-      alert('Пользователь с такими данными не найден');
-    }
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .catch((err) => {
+          const  errCode = err.code;
+          const  errMessage = err.message;
+          if(errCode === 'auth/wrong-password'){
+            console.log(errMessage);
+            alert('неверный пароль')
+          }else if(errCode === 'auth/user-not-found'){
+            console.log(errMessage);
+            alert('пользователь не найден')
+          }else{
+            alert(errMessage)
+          }
+          console.log(err);
+        });
+
+    // const user = this.getUser(email);
+    //
+    // if(user && user.password === password){
+    //   this.authorizedUser(user);
+    //   handler();
+    // }else{
+    //   alert('Пользователь с такими данными не найден');
+    // }
 
   },
   logOut(handler){ /*выход*/
-    this.user = null;
-    handler();
+    firebase.auth().signOut();
+    // this.user = null;
+    // handler();
   },
   signUp(email, password, handler){ /*регистрация*/
     if(!regExpValidEmail.test(email)){
@@ -85,14 +114,32 @@ const setUsers = {
       alert('Ввведите данные');
       return;
     }
-    if(!this.getUser(email)){
-      const user = {email, password, displayName: email.split('@', 1).join()};/*email.substring(0, email.indexOf('@'))*/
-      listUsers.push(user);
-      this.authorizedUser(user);
-      handler();
-    }else {
-      alert('Пользователь с такием емайл уже зарегестрирован');
-    }
+    firebase.auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((data) => {
+          console.log(data)
+        })
+        .catch((err) => {
+          const  errCode = err.code;
+          const  errMessage = err.message;
+          if(errCode === 'auth/week-password'){
+            console.log(errMessage);
+            alert('слабый пароль')
+          }else if(errCode === 'auth/email-already-in-use'){
+            console.log(errMessage);
+            alert('этот емейл уже используется')
+          }else{
+            alert(errMessage)
+          }
+        });
+    // if(!this.getUser(email)){
+    //   const user = {email, password, displayName: email.split('@', 1).join()};/*email.substring(0, email.indexOf('@'))*/
+    //   listUsers.push(user);
+    //   this.authorizedUser(user);
+    //   handler();
+    // }else {
+    //   alert('Пользователь с такием емайл уже зарегестрирован');
+    // }
   },
   editUser(userName, userPhoto, handler){
     if(userName){
@@ -192,8 +239,6 @@ const showAllPosts = () => {
   let postsHTML = '';
   setPosts.allPosts.forEach(({ title, text, date, tags, like, author, comments }) => {
 
-
-
     postsHTML += `
     <section class="post">
          <div class="post-body">
@@ -271,7 +316,7 @@ const init = () => {
 
   exitElem.addEventListener('click', (event) => {
     event.preventDefault();
-    setUsers.logOut(toggleAuthDom);
+    setUsers.logOut();
   });
 
   editElem.addEventListener('click', (event) => {
@@ -314,6 +359,8 @@ const init = () => {
     addPostElem.classList.remove('visible');
     addPostElem.reset();
   });
+
+  setUsers.initUser(toggleAuthDom);
 
   showAllPosts();
   toggleAuthDom();
