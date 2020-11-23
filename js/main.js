@@ -39,21 +39,21 @@ const  userAvatarElem = document.querySelector('.user-avatar');
 const postWrapper = document.querySelector('.posts');
 const buttonNewPost = document.querySelector('.button-new-post');
 const addPostElem = document.querySelector('.add-post');
+const DEFAULT_PHOTO = userAvatarElem.src;
 
-
-const listUsers = [
-  {
-    email: 'buch@gmail.com',
-    password: '123',
-    displayName: 'Buch',
-    photo:'https://i.pinimg.com/originals/70/44/f8/7044f887031b89cb1025f20c7a0005f9.jpg'
-  },
-  {
-    email: 'foo@gmail.com',
-    password: '9876554',
-    displayName: 'Fooo'
-  }
-];
+// const listUsers = [
+//   {
+//     email: 'buch@gmail.com',
+//     password: '123',
+//     displayName: 'Buch',
+//     photo:'https://i.pinimg.com/originals/70/44/f8/7044f887031b89cb1025f20c7a0005f9.jpg'
+//   },
+//   {
+//     email: 'foo@gmail.com',
+//     password: '9876554',
+//     displayName: 'Fooo'
+//   }
+// ];
 
 const setUsers = {
   user: null,
@@ -117,7 +117,7 @@ const setUsers = {
     firebase.auth()
         .createUserWithEmailAndPassword(email, password)
         .then((data) => {
-          console.log(data)
+          this.editUser(email.substring(0, email.indexOf('@')), null, handler)
         })
         .catch((err) => {
           const  errCode = err.code;
@@ -141,71 +141,102 @@ const setUsers = {
     //   alert('Пользователь с такием емайл уже зарегестрирован');
     // }
   },
-  editUser(userName, userPhoto, handler){
-    if(userName){
-      this.user.displayName = userName;
-    }
-    if(userPhoto){
-      this.user.photo = userPhoto;
-    }
-    handler();
-  },
-  getUser(email){
-    return listUsers.find((item) => item.email === email)
-  },
-  authorizedUser(user){
-    this.user = user;
+  editUser(displayName, photoURL, handler){ //редактирование пользователя
 
+    const  user = firebase.auth().currentUser;
+
+    if(displayName){
+      if(photoURL){
+        user.updateProfile({
+          displayName,
+          photoURL
+        }).then(handler)
+      } else {
+        user.updateProfile({
+          displayName
+        }).then(handler)
+      }
+    }
+  },
+  sendForget(email){
+    firebase.auth().sendPasswordResetEmail(email)
+        .then(() => {
+          alert('письмо отправлено')
+        })
+        .catch(err => console.log(err))
   }
+  // getUser(email){
+  //   return listUsers.find((item) => item.email === email)
+  // },
+  // authorizedUser(user){
+  //   this.user = user;
+  //
+  // }
 };
+const  loginForget = document.querySelector('.login-forget');
+loginForget.addEventListener('click', event => {
+  event.preventDefault();
+  setUsers.sendForget(emailInput.value);
+  emailInput.value = '';
+});
 
 const  setPosts = {
   allPosts: [
-    {
-      title: 'Заголовлок поста',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab amet blanditiis consequatur corporis cum deleniti dicta, dolore enim, esse eum exercitationem expedita fuga inventore itaque minus nostrum nulla odit perferendis, placeat praesentium quam repellendus reprehenderit veniam voluptatem voluptatibus. Beatae debitis deleniti eaque earum eos eum fuga nemo optio repellendus temporibus. Ab alias blanditiis deserunt ducimus ea fugit impedit laborum minima molestiae molestias necessitatibus nemo optio quia, quos recusandae rerum velit voluptatem. Alias autem blanditiis consectetur dolore doloremque doloribus eveniet exercitationem, nostrum officiis quam quis repudiandae suscipit velit. Asperiores earum iste, libero minus nam provident reprehenderit rerum sapiente sed similique voluptate!',
-      tags: ['свежее','новое','горячее','мое','случайность'],
-      author: {displayName: 'maks', photo:'https://i.pinimg.com/originals/70/44/f8/7044f887031b89cb1025f20c7a0005f9.jpg'},
-      date: '11.11.2020, 20:54:00',
-      like: 45,
-      comments: 20
-    },
-    {
-      title: 'Заголовлок поста 2',
-      text: 'Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты. Языком что рот маленький реторический вершину текстов обеспечивает гор свой назад решила сбить маленькая дорогу жизни рукопись ему букв деревни предложения, ручеек залетают продолжил парадигматическая? Но языком сих пустился, запятой своего его',
-      tags: ['свежее','новое','горячее','мое','случайность'],
-      author: {displayName: 'anna', photo: 'https://cs9.pikabu.ru/post_img/2020/02/10/6/1581327942162716565.jpg'},
-      date: '11.11.2020, 20:54:00',
-      like: 30,
-      comments: 12
-    },
-    {
-      title: 'Заголовлок поста 3',
-      text: 'Далеко-далеко вершину  продолжил парадигматическая? Но языком сих пустился, запятой своего его',
-      tags: ['свежее','новое','горячее','мое','случайность'],
-      author: {displayName: 'ganna', photo: 'https://cs.pikabu.ru/post_img/2013/10/23/8/1382531440_1694009757.jpg'},
-      date: '11.11.2020, 20:54:00',
-      like: 393,
-      comments: 5
-    }
+    // {
+    //   title: 'Заголовлок поста',
+    //   text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab amet blanditiis consequatur corporis cum deleniti dicta, dolore enim, esse eum exercitationem expedita fuga inventore itaque minus nostrum nulla odit perferendis, placeat praesentium quam repellendus reprehenderit veniam voluptatem voluptatibus. Beatae debitis deleniti eaque earum eos eum fuga nemo optio repellendus temporibus. Ab alias blanditiis deserunt ducimus ea fugit impedit laborum minima molestiae molestias necessitatibus nemo optio quia, quos recusandae rerum velit voluptatem. Alias autem blanditiis consectetur dolore doloremque doloribus eveniet exercitationem, nostrum officiis quam quis repudiandae suscipit velit. Asperiores earum iste, libero minus nam provident reprehenderit rerum sapiente sed similique voluptate!',
+    //   tags: ['свежее','новое','горячее','мое','случайность'],
+    //   author: {displayName: 'maks', photo:'https://i.pinimg.com/originals/70/44/f8/7044f887031b89cb1025f20c7a0005f9.jpg'},
+    //   date: '11.11.2020, 20:54:00',
+    //   like: 45,
+    //   comments: 20
+    // },
+    // {
+    //   title: 'Заголовлок поста 2',
+    //   text: 'Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты. Языком что рот маленький реторический вершину текстов обеспечивает гор свой назад решила сбить маленькая дорогу жизни рукопись ему букв деревни предложения, ручеек залетают продолжил парадигматическая? Но языком сих пустился, запятой своего его',
+    //   tags: ['свежее','новое','горячее','мое','случайность'],
+    //   author: {displayName: 'anna', photo: 'https://cs9.pikabu.ru/post_img/2020/02/10/6/1581327942162716565.jpg'},
+    //   date: '11.11.2020, 20:54:00',
+    //   like: 30,
+    //   comments: 12
+    // },
+    // {
+    //   title: 'Заголовлок поста 3',
+    //   text: 'Далеко-далеко вершину  продолжил парадигматическая? Но языком сих пустился, запятой своего его',
+    //   tags: ['свежее','новое','горячее','мое','случайность'],
+    //   author: {displayName: 'ganna', photo: 'https://cs.pikabu.ru/post_img/2013/10/23/8/1382531440_1694009757.jpg'},
+    //   date: '11.11.2020, 20:54:00',
+    //   like: 393,
+    //   comments: 5
+    // }
   ],
   addPost(title, text, tags, handler){
+
+    const  user = firebase.auth().currentUser;
+
     this.allPosts.unshift({
+      id: `postID${(+new Date()).toString(16)}-${user.uid}`,
       title,
       text,
       tags: tags.split(',').map(item => item.trim()),
       author: {
         displayName: setUsers.user.displayName,
-        photo: setUsers.user.photo
+        photo: setUsers.user.photoURL
       },
       date: new Date().toLocaleString(),
       like: 0,
       comments: 0
     });
 
-    if(handler){
+    firebase.database().ref('post').set(this.allPosts)
+        .then(() => this.getPosts(handler))
+
+  },
+  getPosts(handler){
+    firebase.database().ref('post').on('value', snapshot => {
+      this.allPosts = snapshot.val() || [];
       handler();
-    }
+    })
   }
 };
 
@@ -216,7 +247,7 @@ const toggleAuthDom = () => {
     loginElem.style.display = "none";
     userElem.style.display = "";
     userNameElem.textContent = user.displayName;
-    userAvatarElem.src = user.photo || userAvatarElem.src;
+    userAvatarElem.src = user.photoURL || DEFAULT_PHOTO;
     buttonNewPost.classList.add('visible');
   }else{
     loginElem.style.display = "";
@@ -361,11 +392,11 @@ const init = () => {
   });
 
   setUsers.initUser(toggleAuthDom);
+  setPosts.getPosts(showAllPosts)
 
-  showAllPosts();
-  toggleAuthDom();
+  // showAllPosts();
+  // toggleAuthDom();
 };
 
 document.addEventListener('DOMContentLoaded', init);
 
-//buch@gmail.com
